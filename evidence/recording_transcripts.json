@@ -1,0 +1,83 @@
+[
+  {
+    "call_id": "call_01",
+    "file_name": "luvvoice.com-20260922-0m4VPP.mp3",
+    "language": "english",
+    "scenario": "english_cooperative",
+    "transcript": "claim status agent magandang ara thank you for calling healthsecure insurance a o pasi carlo how may i help you today hello carlo gusto ko lang sana i follow-up young status in claim ko para sa laboratory assessment ko last month siggy pa i can help you check that puid kol pabang makuha ang inyang policy no buang pangyalin parama verify kosa system juan de la cruz policy no one million two hundred thirty four thousand five hundred and sixty seven salamat pa serwan nakiketa kyo padido na unclaim ninyo para essay lab assessment i approved na ang reimbursement amount para maki credit sa in young registered bank account within three to five banking days",
+    "duration_seconds": 62.02,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-0m4VPP.mp3"
+  },
+  {
+    "call_id": "call_02",
+    "file_name": "luvvoice.com-20260922-7n8HaC.mp3",
+    "language": "english",
+    "scenario": "english_objection",
+    "transcript": "document request for claims agent good morning you've reached healthsecure insurance speaking is david how can i support you customer hi david i received an email saying my recent hospital claim requires additional documents for the medical assessment what exactly do you need let me check the system for you please provide your claim reference number customer it's c102938 agent thank you yes our claims assessment team requires the detailed discharge summary and the itemized pharmacy bills from your visit on august thirtieth you can upload these directly through the customer portal under the pending claims section to resume the review process",
+    "duration_seconds": 49.06,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-7n8HaC.mp3"
+  },
+  {
+    "call_id": "call_03",
+    "file_name": "luvvoice.com-20260922-9kqdTo.mp3",
+    "language": "english",
+    "scenario": "english_conflict",
+    "transcript": "policy coverage assessment inquiry agent welcome to healthsecure customer care this is sarah how may i help you customer hello i want to know if my current policy covers a comprehensive cardiac assessment agent i'd be happy to check your coverage limits could you please verify your full name and registered phone number customer john doe five five five zero one nine eight agent thank you john looking at your platinum health plan a comprehensive cardiac assessment is covered up to eighty percent after you meet your annual deductible provided it's at an in network facility would you like me to email you a list of in network cardiologists customer yes please that would be great",
+    "duration_seconds": 49.66,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-9kqdTo.mp3"
+  },
+  {
+    "call_id": "call_04",
+    "file_name": "luvvoice.com-20260922-AKziOU.mp3",
+    "language": "english",
+    "scenario": "english_out_of_scope",
+    "transcript": "coverage inquiry agent selimat sheng healthsecure customer service denggan city d sini ada yang basa sia bantu hari ini shang city sia injun britannia apaka polis sia manangung baya rawat in apt dan penelayan doctor spezialis tentu sia akan bantu sec manfat polis ibu mohan subutkan namah lengkap dan nomur telipon young turd after nama sia au lestari nomur telipon eight twelve-three thousand four hundred fifty six-seven thousand eight hundred ninety terima kasey ibu ayu sejuai denggan polis silver yang ibu maliki beyarrawat in app dan penelayan doctor spezialis daitenggan sejuai denggan limit te hunan sebusar",
+    "duration_seconds": 61.87,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-AKziOU.mp3"
+  },
+  {
+    "call_id": "call_05",
+    "file_name": "luvvoice.com-20260922-P3UE3v.mp3",
+    "language": "english",
+    "scenario": "english_human_request",
+    "transcript": "claims status agent selahmat pajai terra mackasey tela mengabungi health secure insurance dengen siya buti ada yang bisi de bantu bol sibutkan nomur polis dan tangal lahir ba pak antuque verifakasi data customer nomur polis saya hs nine nine eight eight seven seven tangal lahir fifteen augustus nineteen eighty eight agent terama casey data bapak suda sejuai untuck claim penelay and medis tangal september ten sought eine masi dalam proses penanja on ola tim annalise cami estima si processnia adela seven hari kurja bapakakan menarima notificasi via email gika penalein suda seal sai",
+    "duration_seconds": 59.66,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-P3UE3v.mp3"
+  },
+  {
+    "call_id": "call_06",
+    "file_name": "luvvoice.com-20260922-pbB5QW.mp3",
+    "language": "taglish",
+    "scenario": "taglish_cooperative",
+    "transcript": "claim status inquiry agent thank you for calling healthsecure insurance my name is alex how can i assist you today customer hi alex i'm calling to check the status of a medical claim i submitted last week for an outpatient assessment agent i can certainly help you with that may i have your policy number and date of birth to pull up your account customer yes it's hsi nine eight seven six five four three and my birthday is may twelfth nineteen eighty five agent thank you i see your claim for the assessment on september fifteenth it is currently under review by our medical claims team this process usually takes seven to ten business days you will receive an email notification once the assessment review is finalized and the claim is approved",
+    "duration_seconds": 52.42,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-pbB5QW.mp3"
+  },
+  {
+    "call_id": "call_07",
+    "file_name": "luvvoice.com-20260922-R6AG7Z.mp3",
+    "language": "taglish",
+    "scenario": "taglish_escalation",
+    "transcript": "agent health secure pre authorization department my name is lisa how can i help you today customer hi lisa my doctor recommended a knee replacement and i need to get the preoperative assessment approved agent i can assist you with initiating the preauthorization i'll need your doctor's national provider identifier and the specific procedure codes they plan to use customer i have the paperwork right here the procedure code is twenty seven thousand four hundred forty seven agent thank you i have logged the request our assessment team will review the medical necessity with your doctor's office and we will notify both of you of the decision within seventy two hours",
+    "duration_seconds": 45.94,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-R6AG7Z.mp3"
+  },
+  {
+    "call_id": "call_08",
+    "file_name": "luvvoice.com-20260922-R6P5ov.mp3",
+    "language": "bahasa",
+    "scenario": "bahasa_cooperative",
+    "transcript": "adding a dependent agent thank you for contacting healthsecure this is mark how can i help you today customer i need to know how to add my newborn daughter to my health insurance policy agent congratulations i can definitely guide you through that process for security purposes please confirm your policy number customer policy number is four four five five six six seven seven agent perfect to add a dependent you have a thirty day window from the date of birth i will email you the dependent edition form you will need to fill it out and upload it back to our secure portal along with a copy of the birth certificate",
+    "duration_seconds": 46.92,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-R6P5ov.mp3"
+  },
+  {
+    "call_id": "call_09",
+    "file_name": "luvvoice.com-20260922-V6hOzA.mp3",
+    "language": "bahasa",
+    "scenario": "bahasa_escalation",
+    "transcript": "coverage inquiry agent welcome sa health secure this is maria customer hi maria if covered b a ing health insurance annual physical assessment agent let me check your policy details paaki confirm ng inyang date of birth at mobile number customer october tenth nineteen ninety number koi0917-one hundred twenty three-four thousand five hundred sixty seven agent thank you pa yes under sa inyang gold plan covered paang annual physical assessment up to ten thousand pesos per year sa aiding mga accredited clinics",
+    "duration_seconds": 51.65,
+    "source_path": "C:/Users/ashut/OneDrive/Desktop/Darwix_AI/Darwix-AI-Submission/recordings/luvvoice.com-20260922-V6hOzA.mp3"
+  }
+]

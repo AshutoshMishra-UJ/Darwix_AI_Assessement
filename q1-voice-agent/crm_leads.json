@@ -1,0 +1,18 @@
+[
+  {
+    "lead_id": "LEAD-F438DC6A",
+    "created_at": "2026-09-22T14:20:26.548946Z",
+    "timestamp": 1790086826.5489466,
+    "agent": "aria",
+    "name": "Test User",
+    "age": 32,
+    "city": "Bangalore",
+    "coverage_type": "individual",
+    "sum_insured_preference": "10L",
+    "qualified": true,
+    "recommended_plan": "Gold",
+    "pre_existing_conditions": "None",
+    "notes": "",
+    "status": "new"
+  }
+]

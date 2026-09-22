@@ -1,0 +1,74 @@
+[
+    {
+        "record_id": "demo-eligibility-01",
+        "title": "Entry eligibility and age bands",
+        "content": "Assessment demo rule: primary applicants are accepted from age 18 through 65 at first enrollment. Applicants aged 60 through 65 require additional underwriting review. Children may be included on a family plan subject to the product's dependent-age rules.",
+        "category": "eligibility",
+        "source": "assessment_demo_policy_notes",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-waiting-01",
+        "title": "Waiting periods and accidents",
+        "content": "Assessment demo rule: a general illness waiting period may apply after policy inception, while accidental injuries are treated separately. Pre-existing conditions and listed procedures can carry longer waiting periods. The exact schedule must be confirmed against the approved policy wording.",
+        "category": "policy",
+        "source": "assessment_demo_policy_notes",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-coverage-01",
+        "title": "Hospitalisation and day-care coverage",
+        "content": "Assessment demo rule: eligible inpatient hospitalisation and listed day-care procedures can be covered within the selected sum insured, subject to exclusions, limits, waiting periods, and claim documentation. The agent must not promise reimbursement without checking the policy schedule.",
+        "category": "coverage",
+        "source": "assessment_demo_policy_notes",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-claims-01",
+        "title": "Claims and cashless workflow",
+        "content": "Assessment demo workflow: for a planned admission, the member should contact the insurer or network desk in advance for pre-authorisation. For emergencies, notify the insurer as soon as reasonably possible and retain discharge summaries, invoices, prescriptions, and diagnostic reports.",
+        "category": "claims",
+        "source": "assessment_demo_claims_notes",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-privacy-01",
+        "title": "Safe data collection",
+        "content": "The voice agent should collect only qualification details needed for a follow-up. It must never request card numbers, one-time passwords, passwords, or full government identification numbers. Sensitive details should be redacted from transcripts and escalated when required.",
+        "category": "compliance",
+        "source": "assessment_demo_compliance_notes",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-objection-01",
+        "title": "Premium affordability objection",
+        "content": "When a caller says the premium is too expensive, acknowledge the concern, ask about their desired protection and budget, and offer a plan comparison or callback. Do not pressure the caller or quote a premium unless it is present in an approved rate table.",
+        "category": "objection",
+        "source": "assessment_demo_agent_guide",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-escalation-01",
+        "title": "Human escalation triggers",
+        "content": "Escalate when the caller asks for a human, disputes a claim, reports a medical emergency, provides conflicting eligibility information, or asks a question that cannot be answered from the knowledge base. Confirm the handoff in the caller's language.",
+        "category": "escalation",
+        "source": "assessment_demo_agent_guide",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    },
+    {
+        "record_id": "demo-localization-01",
+        "title": "Localized conversation principles",
+        "content": "For Taglish, use respectful po or opo naturally and retain common finance terms such as premium, beneficiary, policy, and coverage. For Bahasa Indonesia, use a warm formal or colloquial register and terms such as cicilan, tenor, denda, and jatuh tempo when relevant. Localization should adapt tone and context, not translate word for word.",
+        "category": "localization",
+        "source": "assessment_demo_localization_notes",
+        "source_type": "demo_dataset",
+        "version": "0.1"
+    }
+]

@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Aegis Conversation Studio — AI-powered health insurance qualification with live signal intelligence">
+    <title>Aegis Conversation Studio — AI Engineer Assessment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink: #17201d;
+            --muted: #73807a;
+            --paper: #f3f0e9;
+            --panel: #fffdf8;
+            --line: #d9ddd5;
+            --mint: #cdebdc;
+            --blue: #3767ff;
+            --coral: #f16f58;
+            --yellow: #f5ca62;
+            --green: #3da56b;
+            --shadow: 0 18px 60px rgba(30, 45, 35, .08);
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; color: var(--ink); background: var(--paper); font-family: "Space Grotesk", sans-serif; }
+        button, input, select { font: inherit; }
+        button { cursor: pointer; }
+
+        /* Shell layout */
+        .shell { min-height: 100vh; display: grid; grid-template-columns: 240px 1fr; }
+        aside { border-right: 1px solid var(--line); padding: 28px 20px; display: flex; flex-direction: column; background: #e9eee8; position: sticky; top: 0; height: 100vh; overflow: auto; }
+        .brand { font-weight: 700; letter-spacing: -.04em; font-size: 21px; line-height: 1.05; margin-bottom: 40px; }
+        .brand span { color: var(--coral); }
+        .eyebrow, .mono { font-family: "DM Mono", monospace; font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+        .eyebrow { color: var(--muted); margin: 0 0 10px; }
+        nav { display: grid; gap: 6px; }
+        nav button { border: 0; background: transparent; color: var(--muted); text-align: left; padding: 11px 10px; border-radius: 7px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; transition: all .15s; }
+        nav button.active, nav button:hover { background: var(--ink); color: #fff; }
+        .nav-key { font: 10px "DM Mono"; opacity: .55; }
+        .rail-note { margin-top: auto; border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+        .mode-badge { display: inline-block; padding: 3px 8px; border-radius: 20px; font: 10px "DM Mono"; text-transform: uppercase; letter-spacing: .06em; background: var(--mint); color: var(--ink); margin-top: 8px; }
+
+        /* Main */
+        main { min-width: 0; padding: 32px 40px 48px; }
+        header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 36px; gap: 20px; }
+        h1 { font-size: clamp(28px, 4vw, 52px); letter-spacing: -.065em; line-height: .98; margin: 0; }
+        h1 em { color: var(--blue); font-style: normal; }
+        .head-right { text-align: right; color: var(--muted); font-size: 12px; flex-shrink: 0; }
+        .status { display: inline-flex; gap: 7px; align-items: center; color: var(--ink); margin-bottom: 8px; font-weight: 600; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+        /* Views */
+        .view { display: none; }
+        .view.active { display: block; }
+
+        /* Overview */
+        .overview { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .8fr); gap: 20px; }
+        .hero-panel { min-height: 340px; background: var(--ink); color: #f8f7f1; padding: 32px; border-radius: 8px; position: relative; overflow: hidden; box-shadow: var(--shadow); }
+        .hero-panel:after { content: ""; position: absolute; width: 300px; height: 300px; border: 1px solid rgba(205,235,220,.3); border-radius: 50%; right: -80px; bottom: -120px; box-shadow: 0 0 0 28px rgba(205,235,220,.08), 0 0 0 56px rgba(205,235,220,.05); }
+        .hero-panel h2 { font-size: 28px; letter-spacing: -.05em; max-width: 490px; margin: 28px 0 16px; line-height: 1.06; }
+        .hero-panel p { color: #bdc9c1; max-width: 430px; line-height: 1.6; font-size: 14px; }
+        .run-row { display: flex; gap: 10px; margin-top: 32px; position: relative; z-index: 1; flex-wrap: wrap; }
+        .primary { background: var(--mint); color: var(--ink); border: 0; padding: 12px 18px; border-radius: 5px; font-weight: 600; transition: opacity .15s; }
+        .primary:hover { opacity: .85; }
+        .ghost { border: 1px solid rgba(255,255,255,.28); background: transparent; color: white; padding: 11px 15px; border-radius: 5px; transition: background .15s; }
+        .ghost:hover { background: rgba(255,255,255,.1); }
+        .side-stack { display: grid; gap: 20px; }
+        .metric-panel, .trace-panel, .card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 20px; }
+        .metric-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .metric { border-bottom: 1px solid var(--line); padding-bottom: 13px; }
+        .metric:nth-last-child(-n+2) { border: 0; padding-bottom: 0; }
+        .metric strong { display: block; font-size: 28px; letter-spacing: -.05em; margin-top: 8px; }
+        .metric small { color: var(--muted); font-size: 11px; }
+        .trace-panel { background: var(--blue); color: #fff; }
+        .trace-panel .eyebrow { color: #cbd6ff; }
+        .trace-line { display: flex; gap: 10px; margin: 14px 0; font-size: 13px; align-items: center; }
+        .trace-num { width: 22px; height: 22px; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; display: grid; place-items: center; font-size: 11px; flex-shrink: 0; }
+        .section-head { display: flex; align-items: end; justify-content: space-between; margin: 38px 0 16px; gap: 12px; }
+        .section-head h2 { margin: 0; font-size: 20px; letter-spacing: -.04em; }
+        .section-head p { margin: 0; color: var(--muted); font-size: 12px; }
+        .lane { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .lane-card { background: var(--panel); border: 1px solid var(--line); padding: 17px; min-height: 140px; border-radius: 5px; cursor: pointer; transition: transform .15s, box-shadow .15s; }
+        .lane-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(23,32,29,.12); }
+        .lane-card:before { content: ""; display: block; width: 28px; height: 4px; background: var(--coral); margin-bottom: 24px; border-radius: 2px; }
+        .lane-card:nth-child(2):before { background: var(--blue); }
+        .lane-card:nth-child(3):before { background: var(--yellow); }
+        .lane-card:nth-child(4):before { background: var(--green); }
+        .lane-card:nth-child(5):before { background: #9b59b6; }
+        .lane-card h3 { margin: 0 0 6px; font-size: 14px; }
+        .lane-card p { color: var(--muted); font-size: 12px; line-height: 1.45; margin: 0; }
+
+        /* Workspace (conversation + KB) */
+        .workspace { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr); gap: 18px; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; gap: 10px; }
+        select { border: 1px solid var(--line); background: var(--panel); padding: 9px 12px; border-radius: 5px; color: var(--ink); }
+        .transcript { height: 420px; overflow: auto; display: grid; align-content: start; gap: 10px; padding-right: 4px; scroll-behavior: smooth; }
+        .bubble { padding: 12px 15px; background: #eef2ee; border-left: 3px solid var(--muted); font-size: 13px; line-height: 1.55; border-radius: 0 4px 4px 0; }
+        .bubble.agent { background: #e5ebff; border-color: var(--blue); }
+        .bubble.system { background: #fff8e7; border-color: var(--yellow); font-style: italic; }
+        .bubble .meta { display: flex; justify-content: space-between; color: var(--muted); font: 10px "DM Mono"; text-transform: uppercase; margin-bottom: 6px; }
+        .composer { display: flex; gap: 8px; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; }
+        .composer input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 5px; padding: 11px 12px; background: #fff; }
+        .composer input:focus { outline: 2px solid var(--blue); border-color: transparent; }
+        .voice-button { border: 1px solid var(--line); background: var(--panel); color: var(--ink); padding: 0 14px; border-radius: 5px; transition: all .15s; }
+        .voice-button.listening { border-color: var(--coral); color: var(--coral); background: #fff0ee; }
+        .send { border: 0; background: var(--ink); color: #fff; padding: 0 18px; border-radius: 5px; font-weight: 600; transition: opacity .15s; }
+        .send:hover { opacity: .85; }
+        .evidence { display: grid; gap: 10px; max-height: 490px; overflow: auto; }
+        .evidence-card { border: 1px solid var(--line); padding: 14px; border-radius: 5px; background: #fbfaf4; }
+        .evidence-card h3 { font-size: 13px; margin: 0 0 7px; }
+        .evidence-card p { margin: 0; color: #53615a; line-height: 1.45; font-size: 12px; }
+        .score { display: flex; justify-content: space-between; margin-top: 10px; font: 10px "DM Mono"; color: var(--blue); }
+
+        /* KB search */
+        .kb-search { display: flex; gap: 9px; margin-bottom: 18px; }
+        .kb-search input { flex: 1; border: 1px solid var(--line); background: var(--panel); padding: 12px; border-radius: 5px; }
+        .kb-search button { background: var(--blue); color: #fff; border: 0; padding: 0 20px; border-radius: 5px; font-weight: 600; }
+
+        /* Live Signals */
+        .signals-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .6fr); gap: 18px; }
+        .nudge-grid { display: grid; gap: 12px; }
+        .nudge { background: var(--panel); border: 1px solid var(--line); border-top: 4px solid var(--coral); padding: 17px; border-radius: 0 0 5px 5px; }
+        .nudge.compliance_gap { border-top-color: #e74c3c; }
+        .nudge.buying_signal { border-top-color: var(--green); }
+        .nudge.missed_cross_sell { border-top-color: var(--yellow); }
+        .nudge.payment_difficulty { border-top-color: var(--blue); }
+        .nudge.out_of_scope { border-top-color: var(--muted); }
+        .nudge h3 { margin: 10px 0 8px; font-size: 14px; }
+        .nudge p { font-size: 12px; color: #56635d; line-height: 1.5; margin: 0 0 10px; }
+        .nudge .tag { color: var(--muted); font: 10px "DM Mono"; text-transform: uppercase; }
+        .conf-bar { height: 3px; border-radius: 2px; background: var(--line); margin: 8px 0; overflow: hidden; }
+        .conf-fill { height: 100%; border-radius: 2px; background: var(--green); transition: width .3s; }
+        .live-transcript { height: 460px; overflow: auto; display: grid; align-content: start; gap: 8px; }
+        .tx-line { font-size: 12px; line-height: 1.5; padding: 8px 12px; border-radius: 4px; }
+        .tx-line.agent { background: #e5ebff; }
+        .tx-line.customer { background: #f0f5f2; }
+        .tx-line .spk { font: 9px "DM Mono"; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 3px; }
+        .stream-info { background: var(--ink); color: #fff; padding: 12px 16px; border-radius: 5px; font: 11px "DM Mono"; margin-bottom: 12px; display: flex; justify-content: space-between; }
+
+        /* CRM Leads */
+        .leads-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+        .stat-card { background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: 16px; }
+        .stat-card strong { display: block; font-size: 32px; letter-spacing: -.05em; margin-top: 6px; }
+        .stat-card small { color: var(--muted); font-size: 11px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead { background: var(--ink); color: #fff; }
+        thead th { padding: 12px 14px; text-align: left; font-weight: 500; font: 10px "DM Mono"; text-transform: uppercase; letter-spacing: .06em; }
+        tbody tr { border-bottom: 1px solid var(--line); transition: background .1s; }
+        tbody tr:hover { background: #f5f3ec; }
+        tbody td { padding: 11px 14px; vertical-align: top; }
+        .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font: 10px "DM Mono"; text-transform: uppercase; }
+        .badge.qualified { background: #d4f5e2; color: #1a7a45; }
+        .badge.callback { background: #fff3cc; color: #8a6c00; }
+        .badge.new { background: #e8eeff; color: #2a4fd9; }
+        .empty-state { text-align: center; padding: 48px 20px; color: var(--muted); }
+        .empty-state p { font-size: 14px; }
+
+        /* Animations */
+        .reveal { animation: rise .4s ease both; }
+        @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        /* Responsive */
+        @media(max-width:960px) {
+            .shell { grid-template-columns: 1fr; }
+            aside { position: static; height: auto; padding: 16px 20px; }
+            .brand { margin-bottom: 16px; }
+            nav { display: flex; overflow-x: auto; gap: 6px; }
+            nav button { white-space: nowrap; }
+            .rail-note { display: none; }
+            main { padding: 24px 18px 36px; }
+            .overview, .workspace, .signals-layout { grid-template-columns: 1fr; }
+            .lane { grid-template-columns: repeat(2, 1fr); }
+            .leads-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media(max-width:560px) {
+            .lane { grid-template-columns: 1fr; }
+            .leads-stats { grid-template-columns: 1fr 1fr; }
+            h1 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+<div class="shell">
+    <aside>
+        <div class="brand">aegis<span>/</span><br>studio</div>
+        <p class="eyebrow">Assessment runbook</p>
+        <nav id="nav">
+            <button class="active" data-view="overview">Command centre <span class="nav-key">01</span></button>
+            <button data-view="conversation">Conversation lab <span class="nav-key">02</span></button>
+            <button data-view="knowledge">Evidence index <span class="nav-key">03</span></button>
+            <button data-view="nudges">Live signals <span class="nav-key">04</span></button>
+            <button data-view="leads">CRM leads <span class="nav-key">05</span></button>
+        </nav>
+        <div class="rail-note">
+            <b>Aegis Conversation Studio</b><br>
+            AI Engineer Assessment<br>
+            ShieldCare Insurance<br>
+            Arogya Shield Plus
+            <div class="mode-badge" id="mode-badge">CHECKING...</div>
+        </div>
+    </aside>
+    <main>
+        <header>
+            <div>
+                <p class="eyebrow">Connected conversation intelligence / AI Engineer Assessment 2026</p>
+                <h1>Make every call<br><em>provable.</em></h1>
+            </div>
+            <div class="head-right">
+                <div class="status"><span class="dot"></span> SYSTEM READY</div><br>
+                <span id="health-label">checking services...</span>
+            </div>
+        </header>
+
+        <!-- ── 01 OVERVIEW ─────────────────────────────────── -->
+        <section id="overview" class="view active">
+            <div class="overview reveal">
+                <div class="hero-panel">
+                    <p class="eyebrow">Aegis operating picture</p>
+                    <h2>One conversation. Four evidence trails.</h2>
+                    <p>Qualify a caller, retrieve the exact policy evidence, localize the interaction, and surface the next best action while the conversation is still live.</p>
+                    <div class="run-row">
+                        <button class="primary" onclick="switchView('conversation')">Open conversation lab</button>
+                        <button class="ghost" onclick="switchView('nudges')">Watch live signals</button>
+                    </div>
+                </div>
+                <div class="side-stack">
+                    <div class="metric-panel">
+                        <div class="metric"><span class="eyebrow">KB records</span><strong>40</strong><small>8 categories</small></div>
+                        <div class="metric"><span class="eyebrow">Agent modes</span><strong>03</strong><small>EN / PH / ID</small></div>
+                        <div class="metric"><span class="eyebrow">P95 target</span><strong>2.1s</strong><small>nudge delivery</small></div>
+                        <div class="metric"><span class="eyebrow">CRM writes</span><strong id="crm-count">00</strong><small>local event log</small></div>
+                    </div>
+                    <div class="trace-panel">
+                        <p class="eyebrow">Proof chain</p>
+                        <div class="trace-line"><span class="trace-num">1</span>Caller signal captured via voice / text</div>
+                        <div class="trace-line"><span class="trace-num">2</span>Policy evidence retrieved &amp; cited</div>
+                        <div class="trace-line"><span class="trace-num">3</span>Action recorded to local CRM</div>
+                        <div class="trace-line"><span class="trace-num">4</span>Live nudge broadcast to supervisor desk</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Five views / one backbone</p>
+                    <h2>The assessment, as a working system</h2>
+                </div>
+                <p>Click any tile to open the demo surface.</p>
+            </div>
+            <div class="lane">
+                <div class="lane-card" onclick="switchView('conversation')">
+                    <h3>01 / Voice qualification</h3>
+                    <p>Browser voice or text with KB-grounded answers and local lead action.</p>
+                </div>
+                <div class="lane-card" onclick="switchView('knowledge')">
+                    <h3>02 / Retrieval evidence</h3>
+                    <p>Query, matched record, score, source, and version shown together.</p>
+                </div>
+                <div class="lane-card" onclick="switchView('conversation')">
+                    <h3>03 / Native-language modes</h3>
+                    <p>Taglish and Bahasa prompts adapt register rather than translating literally.</p>
+                </div>
+                <div class="lane-card" onclick="switchView('nudges')">
+                    <h3>04 / Live nudges</h3>
+                    <p>Compliance and opportunity signals with confidence, latency, and expiry.</p>
+                </div>
+                <div class="lane-card" onclick="switchView('leads')">
+                    <h3>05 / CRM leads</h3>
+                    <p>All qualified leads and callbacks saved locally during the session.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 02 CONVERSATION LAB ─────────────────────────── -->
+        <section id="conversation" class="view">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Q1 + Q3 / browser call simulation</p>
+                    <h2>Conversation lab</h2>
+                </div>
+                <select id="agent">
+                    <option value="aria">🤖 Aria / English (EN-IN)</option>
+                    <option value="maya">🌺 Maya / Taglish (PH)</option>
+                    <option value="dewi">🌸 Dewi / Bahasa Indonesia (ID)</option>
+                </select>
+            </div>
+            <div class="workspace">
+                <div class="card">
+                    <div class="toolbar">
+                        <span class="mono" id="call-state">READY TO START</span>
+                        <div style="display:flex;gap:8px">
+                            <button class="primary" id="start-call">Start call</button>
+                            <button class="ghost" style="background:var(--ink);color:#fff;border:0;padding:0 12px;border-radius:5px;font-size:12px;" id="tts-toggle" title="Toggle browser TTS">🔊 TTS</button>
+                        </div>
+                    </div>
+                    <div class="transcript" id="transcript">
+                        <div class="bubble agent reveal">
+                            <div class="meta"><span>Aria / agent</span><span>00:00</span></div>
+                            Hello! I'm Aria from ShieldCare Insurance. I can help you explore health coverage and arrange a specialist follow-up. What would you like to know?
+                        </div>
+                    </div>
+                    <div class="composer">
+                        <button class="voice-button" id="voice-input" title="Use browser speech input">🎤 Mic</button>
+                        <input id="message" placeholder="Ask about eligibility, claims, waiting periods..." />
+                        <button class="send" id="send">Send</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="eyebrow">Evidence attached to this turn</p>
+                    <div class="evidence" id="turn-evidence">
+                        <div class="evidence-card">
+                            <h3>Evidence appears here</h3>
+                            <p>Ask a policy question and the matching record will be shown beside the response.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 03 EVIDENCE INDEX ───────────────────────────── -->
+        <section id="knowledge" class="view">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Q2 / retrieval explorer</p>
+                    <h2>Evidence index</h2>
+                </div>
+                <p>Search the 40-record knowledge base.</p>
+            </div>
+            <div class="kb-search">
+                <input id="kb-query" value="What is the waiting period for pre-existing conditions?" />
+                <button id="kb-run">Search records</button>
+            </div>
+            <div class="evidence" id="kb-results"></div>
+        </section>
+
+        <!-- ── 04 LIVE SIGNALS ────────────────────────────── -->
+        <section id="nudges" class="view">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Q4 / streaming replay</p>
+                    <h2>Live signal desk</h2>
+                </div>
+                <button class="primary" id="refresh-nudges">↻ Replay signal window</button>
+            </div>
+            <div class="signals-layout">
+                <div>
+                    <div class="stream-info">
+                        <span>STREAM / CALL-REPLAY-0041</span>
+                        <span id="nudge-time">ASR 180ms / LLM 1.1s / DELIVERY 15ms</span>
+                    </div>
+                    <p style="color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 16px">Signals are emitted only when evidence crosses the confidence threshold. Duplicates are suppressed by type cooldown and every nudge expires.</p>
+                    <div class="nudge-grid" id="nudge-grid"></div>
+                </div>
+                <div class="card">
+                    <p class="eyebrow">Live transcript feed</p>
+                    <div class="live-transcript" id="live-transcript">
+                        <div class="tx-line agent"><span class="spk">Agent — Aria</span>Good afternoon, this is Aria from ShieldCare. Am I speaking with Priya?</div>
+                        <div class="tx-line customer"><span class="spk">Customer — Priya</span>Yes, this is Priya. I got a message about my renewal?</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 05 CRM LEADS ───────────────────────────────── -->
+        <section id="leads" class="view">
+            <div class="section-head">
+                <div>
+                    <p class="eyebrow">Q1 CRM / lead log</p>
+                    <h2>CRM leads</h2>
+                </div>
+                <button class="primary" id="refresh-leads" onclick="loadLeads()">↻ Refresh</button>
+            </div>
+            <div class="leads-stats">
+                <div class="stat-card"><span class="eyebrow">Total leads</span><strong id="stat-total">0</strong><small>all sessions</small></div>
+                <div class="stat-card"><span class="eyebrow">Qualified</span><strong id="stat-qualified">0</strong><small>ready for follow-up</small></div>
+                <div class="stat-card"><span class="eyebrow">Callbacks</span><strong id="stat-callbacks">0</strong><small>scheduled</small></div>
+                <div class="stat-card"><span class="eyebrow">Agents</span><strong>3</strong><small>EN / PH / ID</small></div>
+            </div>
+            <div class="card" id="leads-table-container">
+                <div class="empty-state">
+                    <p>No leads yet. Start a conversation in the <a href="#" onclick="switchView('conversation');return false;">Conversation lab</a> and trigger an escalation or lead event.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+// ── Navigation ────────────────────────────────────────────────────────────────
+function switchView(view) {
+    document.querySelectorAll('.view').forEach(x => x.classList.toggle('active', x.id === view));
+    document.querySelectorAll('nav button').forEach(x => x.classList.toggle('active', x.dataset.view === view));
+    if (view === 'nudges') loadNudges();
+    if (view === 'leads') loadLeads();
+}
+document.querySelectorAll('nav button').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
+
+// ── Health check ──────────────────────────────────────────────────────────────
+async function checkHealth() {
+    try {
+        const r = await fetch('/api/health');
+        const d = await r.json();
+        const mode = d.mode || (d.groq ? 'groq' : d.gemini ? 'gemini' : 'demo');
+        document.getElementById('health-label').textContent = `${mode.toUpperCase()} MODE / ${d.records || 0} RECORDS`;
+        document.getElementById('mode-badge').textContent = mode.toUpperCase();
+        document.getElementById('mode-badge').style.background = mode === 'groq' ? '#cdebdc' : mode === 'gemini' ? '#e8eeff' : '#fff3cc';
+    } catch(e) {
+        document.getElementById('health-label').textContent = 'server starting...';
+    }
+}
+
+// ── CRM count ─────────────────────────────────────────────────────────────────
+async function refreshCrmCount() {
+    try {
+        const r = await fetch('/api/crm');
+        const d = await r.json();
+        document.getElementById('crm-count').textContent = String((d.events || []).length).padStart(2, '0');
+    } catch(e) {}
+}
+
+// ── Lead saving (browser-side) ────────────────────────────────────────────────
+function shouldCaptureLead(message, answer) {
+    const text = `${message} ${answer}`.toLowerCase();
+    return ['speak to a human','speak to human','talk to a person','human agent','specialist',
+        'callback','transfer','escalate','too expensive','premium is too expensive'].some(t => text.includes(t));
+}
+async function saveLead(message, answer, agent) {
+    await fetch('/api/lead', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({message, answer, agent, channel:'browser', lead_type:'callback'})
+    });
+    refreshCrmCount();
+}
+
+// ── TTS ───────────────────────────────────────────────────────────────────────
+let ttsEnabled = false;
+document.getElementById('tts-toggle').onclick = () => {
+    ttsEnabled = !ttsEnabled;
+    const btn = document.getElementById('tts-toggle');
+    btn.textContent = ttsEnabled ? '🔊 TTS ON' : '🔊 TTS';
+    btn.style.background = ttsEnabled ? 'var(--green)' : 'var(--ink)';
+};
+function speak(text) {
+    if (!ttsEnabled || !window.speechSynthesis) return;
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 1.05;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utter);
+}
+
+// ── Conversation turn ─────────────────────────────────────────────────────────
+async function sendTurn() {
+    const message = document.getElementById('message').value.trim();
+    if (!message) return;
+    document.getElementById('message').value = '';
+    document.getElementById('call-state').textContent = 'RETRIEVING EVIDENCE';
+
+    addBubble('caller', message, 'now');
+
+    const r = await fetch('/api/turn', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({message, agent: document.getElementById('agent').value})
+    });
+    const d = await r.json();
+    const agentLabel = document.getElementById('agent').selectedOptions[0].text;
+    addBubble('agent', d.answer, `${d.latency_ms}ms · ${d.mode}`, agentLabel);
+    speak(d.answer);
+    document.getElementById('call-state').textContent = 'CALL ACTIVE';
+    document.getElementById('transcript').scrollTop = 9999;
+    renderEvidence(d.evidence || [], 'turn-evidence');
+    if (shouldCaptureLead(message, d.answer)) saveLead(message, d.answer, document.getElementById('agent').value);
+}
+
+function addBubble(who, text, meta, label) {
+    const div = document.createElement('div');
+    div.className = `bubble ${who === 'agent' ? 'agent' : ''} reveal`;
+    div.innerHTML = `<div class="meta"><span>${label || who}</span><span>${meta}</span></div>${text}`;
+    document.getElementById('transcript').appendChild(div);
+}
+
+// ── Evidence rendering ────────────────────────────────────────────────────────
+function renderEvidence(items, target) {
+    const el = document.getElementById(target);
+    if (!items.length) {
+        el.innerHTML = '<div class="evidence-card"><h3>No approved match</h3><p>Use the specialist fallback. The agent should not invent an answer.</p></div>';
+        return;
+    }
+    el.innerHTML = items.map(x => `
+        <div class="evidence-card reveal">
+            <h3>${x.title || x.record_id || 'Record'}</h3>
+            <p>${x.content || ''}</p>
+            <div class="score"><span>${x.citation || ''}</span><b>${x.score || ''}</b></div>
+        </div>`).join('');
+}
+
+// ── Start call button ─────────────────────────────────────────────────────────
+let callActive = false;
+document.getElementById('start-call').onclick = () => {
+    callActive = !callActive;
+    document.getElementById('call-state').textContent = callActive ? 'CALL ACTIVE' : 'CALL ENDED';
+    document.getElementById('start-call').textContent = callActive ? 'End call' : 'Start call';
+};
+
+// ── Voice input (Web Speech API) ──────────────────────────────────────────────
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const voiceBtn = document.getElementById('voice-input');
+if (!SpeechRecognition) {
+    voiceBtn.disabled = true;
+    voiceBtn.title = 'Speech input not supported in this browser (use Chrome)';
+} else {
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+    recognition.continuous = false;
+    recognition.onstart = () => { voiceBtn.classList.add('listening'); voiceBtn.textContent = '🎤 Listening...'; document.getElementById('call-state').textContent = 'LISTENING'; };
+    recognition.onresult = e => {
+        const t = Array.from(e.results).map(r => r[0].transcript).join('');
+        document.getElementById('message').value = t;
+        if (e.results[0].isFinal) sendTurn();
+    };
+    recognition.onerror = () => { voiceBtn.classList.remove('listening'); voiceBtn.textContent = '🎤 Mic'; document.getElementById('call-state').textContent = 'CALL ACTIVE'; };
+    recognition.onend = () => { voiceBtn.classList.remove('listening'); voiceBtn.textContent = '🎤 Mic'; };
+    voiceBtn.onclick = () => {
+        const lang = document.getElementById('agent').value === 'maya' ? 'fil-PH' : document.getElementById('agent').value === 'dewi' ? 'id-ID' : 'en-IN';
+        recognition.lang = lang;
+        recognition.start();
+    };
+}
+
+// ── Send button / Enter key ───────────────────────────────────────────────────
+document.getElementById('send').onclick = sendTurn;
+document.getElementById('message').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) sendTurn(); });
+
+// ── KB search ─────────────────────────────────────────────────────────────────
+document.getElementById('kb-run').onclick = async () => {
+    const r = await fetch('/api/query', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({query: document.getElementById('kb-query').value})
+    });
+    const d = await r.json();
+    renderEvidence(d.results || [], 'kb-results');
+};
+
+// ── Nudges ────────────────────────────────────────────────────────────────────
+async function loadNudges() {
+    const r = await fetch('/api/nudges');
+    const d = await r.json();
+    const grid = document.getElementById('nudge-grid');
+    if (!d.nudges || !d.nudges.length) {
+        grid.innerHTML = '<div class="evidence-card"><h3>No active signals</h3><p>Signals appear when confidence thresholds are crossed. Try replaying a demo call.</p></div>';
+        return;
+    }
+    grid.innerHTML = d.nudges.map(n => `
+        <article class="nudge ${n.type} reveal">
+            <span class="tag">${n.priority} priority</span>
+            <h3>${n.type.replaceAll('_', ' ')}</h3>
+            <div class="conf-bar"><div class="conf-fill" style="width:${Math.round(n.confidence * 100)}%"></div></div>
+            <p><b>Evidence:</b> ${n.evidence}</p>
+            <p><b>Next action:</b> ${n.action}</p>
+            <span class="tag">${n.latency_ms}ms · conf ${Math.round(n.confidence * 100)}% · ${n.status}</span>
+        </article>`).join('');
+    document.getElementById('nudge-time').textContent = `P50 ~1,300ms / P95 ~2,100ms / ${d.nudges.length} SIGNALS`;
+}
+document.getElementById('refresh-nudges').onclick = loadNudges;
+
+// ── Transcript feed (live WebSocket) ──────────────────────────────────────────
+function connectDashboardWS() {
+    const ws = new WebSocket(`ws://${location.host}/ws/dashboard`);
+    ws.onmessage = e => {
+        const msg = JSON.parse(e.data);
+        if (msg.type === 'transcript') {
+            const div = document.createElement('div');
+            div.className = `tx-line ${msg.speaker === 'AGENT' ? 'agent' : 'customer'} reveal`;
+            div.innerHTML = `<span class="spk">${msg.speaker}</span>${msg.text}`;
+            const feed = document.getElementById('live-transcript');
+            feed.appendChild(div);
+            feed.scrollTop = 9999;
+        }
+        if (msg.type === 'nudge') {
+            // Flash the live signals tab
+            const tab = document.querySelector('[data-view="nudges"]');
+            tab.style.background = '#f16f58';
+            tab.style.color = '#fff';
+            setTimeout(() => { tab.style.background = ''; tab.style.color = ''; }, 1000);
+        }
+    };
+    ws.onclose = () => setTimeout(connectDashboardWS, 3000);
+}
+connectDashboardWS();
+
+// ── CRM Leads ─────────────────────────────────────────────────────────────────
+async function loadLeads() {
+    try {
+        const r = await fetch('/api/leads');
+        const d = await r.json();
+        const events = d.events || [];
+        const qualified = events.filter(e => e.qualified || e.lead_type === 'callback').length;
+        const callbacks = events.filter(e => e.lead_type === 'callback' || e.type === 'callback').length;
+        document.getElementById('stat-total').textContent = events.length;
+        document.getElementById('stat-qualified').textContent = qualified;
+        document.getElementById('stat-callbacks').textContent = callbacks;
+        document.getElementById('crm-count').textContent = String(events.length).padStart(2, '0');
+
+        const container = document.getElementById('leads-table-container');
+        if (!events.length) {
+            container.innerHTML = '<div class="empty-state"><p>No leads yet. Start a conversation and trigger an escalation or qualification event.</p></div>';
+            return;
+        }
+        container.innerHTML = `<table>
+            <thead><tr><th>ID</th><th>Agent</th><th>Name / Message</th><th>Type</th><th>Status</th><th>Time</th></tr></thead>
+            <tbody>${events.map(e => `<tr>
+                <td><span class="mono">${e.event_id || e.lead_id || '—'}</span></td>
+                <td>${e.agent || '—'}</td>
+                <td style="max-width:240px;word-break:break-word">${e.name || e.message?.slice(0, 60) || '—'}</td>
+                <td><span class="badge ${e.qualified ? 'qualified' : e.lead_type === 'callback' ? 'callback' : 'new'}">${e.lead_type || e.type || 'lead'}</span></td>
+                <td>${e.status || 'new'}</td>
+                <td><span class="mono">${e.created_at ? new Date(typeof e.created_at === 'number' ? e.created_at * 1000 : e.created_at).toLocaleTimeString() : '—'}</span></td>
+            </tr>`).join('')}</tbody>
+        </table>`;
+    } catch(e) {
+        document.getElementById('leads-table-container').innerHTML = '<div class="empty-state"><p>Could not load leads. Make sure the server is running.</p></div>';
+    }
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+checkHealth();
+refreshCrmCount();
+loadNudges();
+document.getElementById('kb-run').click();
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-09-22T18:53:36.054572+00:00",
+  "mode": "local_lexical_baseline",
+  "records": 8,
+  "passed": 1,
+  "total": 5,
+  "results": [
+    {
+      "query": "Can a 62 year old apply?",
+      "expected_record_id": "demo-eligibility-01",
+      "actual_record_id": "KB-003",
+      "score": 0.444,
+      "citation": "KB-003 | ShieldCare Underwriting Guidelines 2026 | v2.1",
+      "pass": false
+    },
+    {
+      "query": "What is the waiting period for pre-existing conditions?",
+      "expected_record_id": "demo-waiting-01",
+      "actual_record_id": "KB-004",
+      "score": 0.798,
+      "citation": "KB-004 | ShieldCare Policy Wording v2.1 | v2.1",
+      "pass": false
+    },
+    {
+      "query": "How does cashless hospitalisation work?",
+      "expected_record_id": "demo-claims-01",
+      "actual_record_id": "KB-011",
+      "score": 0.583,
+      "citation": "KB-011 | ShieldCare Claim Guide 2026 | v2.1",
+      "pass": false
+    },
+    {
+      "query": "The premium is too expensive",
+      "expected_record_id": "demo-objection-01",
+      "actual_record_id": "KB-018",
+      "score": 0.7,
+      "citation": "KB-018 | ShieldCare Sales Objection Handbook 2026 | v2.1",
+      "pass": false
+    },
+    {
+      "query": "I want to speak to a human",
+      "expected_record_id": "demo-escalation-01",
+      "actual_record_id": "demo-escalation-01",
+      "score": 0.68,
+      "citation": "demo-escalation-01 | assessment_demo_agent_guide | v0.1",
+      "pass": true
+    }
+  ]
+}
