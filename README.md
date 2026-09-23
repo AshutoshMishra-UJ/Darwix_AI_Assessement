@@ -86,46 +86,94 @@ Darwix-AI-Submission/
 
 ## System Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                Q2 — ChromaDB Knowledge Base                 │
-│   40 records | all-MiniLM-L6-v2 | cosine + reranking        │
-└────────────────────┬────────────────────────────────────────┘
-                     │ retrieve_for_voice_agent()
-                     ▼
-┌─────────────────────────────────────────────────────────────┐
-│         app.py — Aegis FastAPI Server (port 8002)           │
-│                                                             │
-│  Agent Routing: Aria (EN) · Maya (PH/Taglish) · Dewi (ID)  │
-│  LLM: Groq llama-3.3-70b-versatile (tool-calling, primary)  │
-│  LLM: Gemini 2.0-flash (fallback) · Demo mode (no API key) │
-│  CRM: crm_mock.py → crm_leads.json / crm_events.json       │
-│  Live Insights: Groq signal extraction → nudge filter       │
-│               → WebSocket broadcast to dashboard           │
-│                                                             │
-│  REST:   POST /api/turn  ·  POST /api/query                 │
-│          GET  /api/leads ·  GET  /api/nudges                │
-│  WS:     /ws/dashboard   (live nudge + transcript feed)     │
-└─────────────────────┬───────────────────────────────────────┘
-                      │ WebSocket + REST
-                      ▼
-┌─────────────────────────────────────────────────────────────┐
-│           static/index.html (Browser — 5 tabs)              │
-│  Command Centre  │  Conversation Lab  │  Evidence Index      │
-│  Live Signals    │  CRM Leads                               │
-│  Web Speech API STT · Browser TTS · WebSocket feed         │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    %% Styling
+    classDef ui fill:#4a90e2,stroke:#fff,stroke-width:2px,color:#fff
+    classDef server fill:#27ae60,stroke:#fff,stroke-width:2px,color:#fff
+    classDef agent fill:#8e44ad,stroke:#fff,stroke-width:2px,color:#fff
+    classDef data fill:#e67e22,stroke:#fff,stroke-width:2px,color:#fff
+    classDef ext fill:#c0392b,stroke:#fff,stroke-width:2px,color:#fff
 
-─── Q4 Pipeline (port 8001, standalone) ───────────────────────
-  q4-live-insights/pipeline.py
-    /ws/voice_agent/{call_id}  → Groq agent turns
-    /ws/audio/{call_id}        → Deepgram audio stream
-    /ws/dashboard              → nudge broadcast
-    GET /demo                  → scripted call replay
+    %% Components
+    subgraph Client ["🖥️ Web Browser Client"]
+        UI["Browser UI (5 Tabs)"]:::ui
+        UI_Tabs["Command Centre<br/>Conversation Lab<br/>Evidence Index<br/>Live Signals<br/>CRM Leads"]
+        STT["Web Speech API (STT)"]
+        TTS["Browser TTS"]
+        
+        UI --- UI_Tabs
+        UI --- STT
+        UI --- TTS
+    end
 
-─── Terminal Agents (offline / standalone) ─────────────────────
-  Q1: q1-voice-agent/local_voice_agent.py      → Aria
-  Q3: q3-multilingual/local_multilingual_agent.py → Maya / Dewi
+    subgraph Backend ["⚡ Main Backend (app.py :8002)"]
+        FastAPI["FastAPI Orchestration API"]:::server
+        Router["Agent Router"]
+        CRM_Mock["CRM Module (crm_mock.py)"]
+        
+        FastAPI --> Router
+        FastAPI --> CRM_Mock
+    end
+
+    subgraph Agents ["🤖 Voice Agents"]
+        Aria["Q1: Aria (English)"]:::agent
+        Maya["Q3: Maya (Taglish)"]:::agent
+        Dewi["Q3: Dewi (Bahasa ID)"]:::agent
+        
+        Router --> Aria
+        Router --> Maya
+        Router --> Dewi
+    end
+
+    subgraph Knowledge ["🧠 Q2: Knowledge Base"]
+        ChromaDB[("ChromaDB Vector Store")]:::data
+        Embed["all-MiniLM-L6-v2 (Embeddings)"]
+        Rerank["cross-encoder (Reranking)"]
+        
+        Embed --> ChromaDB
+        Rerank <--> ChromaDB
+    end
+
+    subgraph Insights ["📡 Q4: Live Insights (pipeline.py :8001)"]
+        NudgeEngine["Nudge Engine"]:::server
+        DeepgramStream["Deepgram WebSocket Bridge"]
+        SignalExt["Signal Extraction Rules"]
+        
+        DeepgramStream --> SignalExt
+        SignalExt --> NudgeEngine
+    end
+
+    subgraph Storage ["💾 Local Storage"]
+        CRM_DB[("crm_leads.json<br/>crm_events.json")]:::data
+        KB_Rec[("kb_records.json")]:::data
+        
+        CRM_Mock --> CRM_DB
+        ChromaDB -.-> KB_Rec
+    end
+
+    subgraph External ["🌐 External LLM Services"]
+        Groq["Groq API (Llama-3.3-70b)"]:::ext
+        Gemini["Gemini API (Fallback)"]:::ext
+        DeepgramAPI["Deepgram API (Audio)"]:::ext
+    end
+
+    %% Connections
+    UI -- "REST (POST /api/turn)" --> FastAPI
+    UI -- "REST (POST /api/query)" --> FastAPI
+    UI -- "WebSocket (/ws/dashboard)" <--> FastAPI
+
+    Agents -- "Retrieval" --> Rerank
+    Agents -- "Tool Calling" --> Groq
+    Agents -. "Fallback" .-> Gemini
+    
+    NudgeEngine -- "Live Nudges (WebSocket)" --> UI
+    NudgeEngine -- "Analysis" --> Groq
+    
+    DeepgramStream -. "Live Audio" .-> DeepgramAPI
+
+    %% Note for clarity
+    class Client,Backend,Agents,Knowledge,Insights,Storage,External default
 ```
 
 ---
