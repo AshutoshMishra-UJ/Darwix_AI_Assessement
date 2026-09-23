@@ -1,6 +1,6 @@
 # AI Engineer Assessment — Arogya Shield Plus
 
-**Product:** Arogya Shield Plus Health Insurance (Mock Dataset)  
+**Product:**  Plus Health Insurance (Mock Dataset)  
 **Submission covers:** All four assessment questions — Q1 Voice Agent, Q2 Knowledge Base, Q3 Multilingual Bots, Q4 Live Insights.  
 **Author:** Ashutosh | **Date:** 2026-09-22
 
